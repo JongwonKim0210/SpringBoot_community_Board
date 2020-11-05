@@ -1,6 +1,6 @@
-package com.web.controller;
+package com.web.community.controller;
 
-import com.web.service.BoardService;
+import com.web.community.service.BoardService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

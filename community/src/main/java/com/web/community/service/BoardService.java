@@ -1,4 +1,4 @@
-package com.web.service;
+package com.web.community.service;
 
 import com.web.community.domain.Board;
 import com.web.community.repository.BoardRepository;
