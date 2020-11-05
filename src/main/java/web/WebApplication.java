@@ -1,13 +1,13 @@
-package SpringBoot_community_Board;
+package web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringBootCommunityBoardApplication {
+public class WebApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootCommunityBoardApplication.class, args);
+		SpringApplication.run(WebApplication.class, args);
 	}
 
 }
