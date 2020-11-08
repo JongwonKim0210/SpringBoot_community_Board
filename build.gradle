@@ -1,42 +1,57 @@
-plugins {
-	id 'org.springframework.boot' version '2.3.5.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
-	id 'java'
+buildscript {
+    ext {
+        springBootVersion = '2.0.3.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
-group = 'SpringBoot_community_Board'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    group = 'com.rest'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter-data-jpa')
+        compile('org.springframework.boot:spring-boot-starter-security')
+        compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+        compile('org.springframework.data:spring-data-rest-hal-browser')
+
+        runtime('org.springframework.boot:spring-boot-devtools')
+        runtime('mysql:mysql-connector-java')
+        runtime('com.h2database:h2')
+        compileOnly('org.projectlombok:lombok')
+        testCompile('org.springframework.boot:spring-boot-starter-test')
+        testCompile('org.springframework.security:spring-security-test')
+    }
 }
 
-repositories {
-	mavenCentral()
+project(':data-rest') {
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter-data-rest') {
+            exclude module: "jackson-databind"
+        }
+    }
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'junit:junit:4.12'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.security.oauth:spring-security-oauth2:2.5.0.RELEASE'
-	implementation 'org.springframework.security:spring-security-oauth2-client'
-	implementation 'org.springframework.security:spring-security-oauth2-jose'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-    compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.h2database:h2'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-}
-
-test {
-	useJUnitPlatform()
+project(':rest-web') {
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter-web') {
+            exclude module: "jackson-databind"
+        }
+        compile('org.springframework.boot:spring-boot-starter-hateoas')
+    }
 }
